@@ -6,18 +6,55 @@ const public_users = express.Router();
 
 
 public_users.post("/register", (req,res) => {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+
+    let username = req.body.username;
+    let password = req.body.password;
+
+    if (!username || !password){
+
+        return res.status(400).json({message: "Invalid username/password enter again"});
+
+    }
+
+    let usersFiltered = (username)=>{
+
+        let usersCopy = users.filter((user)=> user.username === username)
+        let DoesExist = false;
+
+        if (usersCopy.length == 1){
+            DoesExist = true;
+        }
+
+        return DoesExist;
+
+    }
+
+    if (usersFiltered(username)){
+
+        return res.json({message: "User already exists please login"});
+
+    } else {
+
+        users.push({"username":username,"password":password});
+        
+        return res.json({message: "User created successfully"});
+
+    }
+
 });
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
+
   let bookTitles = {}
 
   for (let i = 1; i < 11;i++){
+
       bookTitles[i]= books[i]["title"]
   }
+
   return res.status(300).send(JSON.stringify(bookTitles,null,4));
+  
 });
 
 // Get book details based on ISBN
