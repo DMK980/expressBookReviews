@@ -19,13 +19,8 @@ public_users.post("/register", (req,res) => {
     let usersFiltered = (username)=>{
 
         let usersCopy = users.filter((user)=> user.username === username)
-        let DoesExist = false;
 
-        if (usersCopy.length == 1){
-            DoesExist = true;
-        }
-
-        return DoesExist;
+        return usersCopy.length == 1;
 
     }
 
