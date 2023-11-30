@@ -16,15 +16,7 @@ public_users.post("/register", (req,res) => {
 
     }
 
-    let usersFiltered = (username)=>{
-
-        let usersCopy = users.filter((user)=> user.username === username)
-
-        return usersCopy.length == 1;
-
-    }
-
-    if (usersFiltered(username)){
+    if (isValid(username)){
 
         return res.json({message: "User already exists please login"});
 
