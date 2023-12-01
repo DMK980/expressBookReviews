@@ -63,8 +63,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
       if (key === isbn){
 
-        books[key]["reviews"] = {"username":username,"review":review};
-        console.log(books)
+        books[key]["reviews"][`${username}`] = review;
 
         return res.status(200).json({message: "Book Review added"});
 
@@ -86,15 +85,9 @@ regd_users.delete("/auth/review/:isbn",(req,res)=>{
 
         if (key === isbn){
 
-            for (let key in books[key]["reviews"]){
-
-                if ( key.username === username){
-
-                    delete books[key].reviews.username;
-                    console.log(books)
-                    return res.status(200).json({message:"Review Deleted"});
-                }
-            }
+            delete books[key]["reviews"][`${username}`];
+            console.log(books)
+            return res.status(200).json({message: "Book Review deleted"});
 
         }
     }
